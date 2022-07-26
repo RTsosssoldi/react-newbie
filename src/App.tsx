@@ -1,7 +1,9 @@
 import './App.scss';
 import { Component } from 'react';
+import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component';
 
-interface IMonster {
+export interface IMonster {
   id: string;
   name: string;
 }
@@ -57,17 +59,8 @@ class App extends Component<any, ILocalState> {
 
     return (
       <div className="App">
-        <input
-          type="search"
-          className="search-box"
-          placeholder="search..."
-          onChange={onSearchChange}
-        />
-        {filteredMonsters.map((monster) => (
-          <div>
-            <h1 key={monster.id}>{monster.name}</h1>
-          </div>
-        ))}
+        <SearchBox onChangeHandler={onSearchChange} className="search-box" />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
