@@ -8,6 +8,7 @@ interface IMonster {
 
 interface ILocalState {
   monsters: IMonster[];
+  searchTerm: string;
 }
 
 /* 3 generics disponibili:
@@ -24,6 +25,7 @@ class App extends Component<any, ILocalState> {
 
     this.state = {
       monsters: [],
+      searchTerm: '',
     };
   }
 
@@ -38,10 +40,30 @@ class App extends Component<any, ILocalState> {
       );
   }
 
+  // non solo più leggibile ma acnhe ottimizzazione
+  onSearchChange = (event: any) => {
+    const searchTerm = event.target.value.toLowerCase();
+    this.setState({ searchTerm });
+  };
+
   render() {
+    // ottimizzazione
+    const { monsters, searchTerm } = this.state;
+    const { onSearchChange } = this;
+
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
       <div className="App">
-        {this.state.monsters.map((monster) => (
+        <input
+          type="search"
+          className="search-box"
+          placeholder="search..."
+          onChange={onSearchChange}
+        />
+        {filteredMonsters.map((monster) => (
           <div>
             <h1 key={monster.id}>{monster.name}</h1>
           </div>
