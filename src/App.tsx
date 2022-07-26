@@ -23,27 +23,25 @@ class App extends Component<any, ILocalState> {
     super(props);
 
     this.state = {
-      monsters: [
-        {
-          name: 'Goblin',
-          id: 'a1',
-        },
-        {
-          name: 'Orc',
-          id: '21',
-        },
-        {
-          name: 'Troll',
-          id: 'b1',
-        },
-      ],
+      monsters: [],
     };
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((users) =>
+        this.setState(
+          () => ({ monsters: users }),
+          () => console.log(this.state)
+        )
+      );
   }
 
   render() {
     return (
       <div className="App">
-        {this.state.monsters.map((monster, index) => (
+        {this.state.monsters.map((monster) => (
           <div>
             <h1 key={monster.id}>{monster.name}</h1>
           </div>
