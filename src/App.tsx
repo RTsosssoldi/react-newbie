@@ -3,10 +3,27 @@ import logo from './logo.svg';
 import './App.scss';
 import { Component } from 'react';
 
-class App extends Component {
 
-  constructor(props: ) {
-    super();
+/* 3 generics disponibili:
+* P:   props
+* S:   state
+* SS:  snapshot -> is the user defined type of the snapshot
+*      returned by your custom implementation of getSnapshotBeforeUpdate,
+*      which gets passed to componentDidUpdate so you can preserve some application specific details
+*     from the last render.
+*/
+class App extends Component<any, { [key: string]: any }> {
+
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      name: {
+        firstName: 'Luca',
+        lastName: 'Rossi',
+      },
+      company: 'RT'
+    };
   }
 
   render() {
@@ -15,16 +32,14 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.tsx</code> and save to reload.
+            Hi {this.state.name.firstName} {this.state.name.lastName}, i work at {this.state.company}
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <button onClick={() => this.setState({
+            name: {
+              firstName: 'Mario',
+              lastName: 'Verdi',
+            }
+          })} >Change name</button>
         </header>
       </div>
     );
