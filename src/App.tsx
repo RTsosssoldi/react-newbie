@@ -59,7 +59,10 @@ class App extends Component<any, ILocalState> {
 
     return (
       <div className="App">
-        <SearchBox onChangeHandler={onSearchChange} className="search-box" />
+        <SearchBox
+          onChangeHandler={onSearchChange}
+          className="mosnter-search-box"
+        />
         <CardList monsters={filteredMonsters} />
       </div>
     );
