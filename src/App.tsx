@@ -1,50 +1,56 @@
-
-import logo from './logo.svg';
 import './App.scss';
 import { Component } from 'react';
 
+interface IMonster {
+  id: string;
+  name: string;
+}
+
+interface ILocalState {
+  monsters: IMonster[];
+}
 
 /* 3 generics disponibili:
-* P:   props
-* S:   state
-* SS:  snapshot -> is the user defined type of the snapshot
-*      returned by your custom implementation of getSnapshotBeforeUpdate,
-*      which gets passed to componentDidUpdate so you can preserve some application specific details
-*     from the last render.
-*/
-class App extends Component<any, { [key: string]: any }> {
-
+ * P:   props
+ * S:   state
+ * SS:  snapshot -> is the user defined type of the snapshot
+ *      returned by your custom implementation of getSnapshotBeforeUpdate,
+ *      which gets passed to componentDidUpdate so you can preserve some application specific details
+ *     from the last render.
+ */
+class App extends Component<any, ILocalState> {
   constructor(props: any) {
     super(props);
 
     this.state = {
-      name: {
-        firstName: 'Luca',
-        lastName: 'Rossi',
-      },
-      company: 'RT'
+      monsters: [
+        {
+          name: 'Goblin',
+          id: 'a1',
+        },
+        {
+          name: 'Orc',
+          id: '21',
+        },
+        {
+          name: 'Troll',
+          id: 'b1',
+        },
+      ],
     };
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Hi {this.state.name.firstName} {this.state.name.lastName}, i work at {this.state.company}
-          </p>
-          <button onClick={() => this.setState({
-            name: {
-              firstName: 'Mario',
-              lastName: 'Verdi',
-            }
-          })} >Change name</button>
-        </header>
+        {this.state.monsters.map((monster, index) => (
+          <div>
+            <h1 key={monster.id}>{monster.name}</h1>
+          </div>
+        ))}
       </div>
     );
   }
-
 }
 
 export default App;
